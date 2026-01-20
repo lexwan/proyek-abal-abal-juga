@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belajar HTML + Vue.js</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+        header { background: #42b883; color: white; padding: 1rem; }
+        nav { background: #35495e; padding: 0.5rem; }
+        nav a { color: white; text-decoration: none; margin-right: 1rem; }
+        main { padding: 2rem; max-width: 800px; margin: 0 auto; }
+        section { margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; }
+        footer { background: #f5f5f5; text-align: center; padding: 1rem; }
+        .form-group { margin-bottom: 1rem; }
+        label { display: block; margin-bottom: 0.5rem; font-weight: bold; }
+        input, select, textarea { width: 100%; padding: 0.5rem; border: 1px solid #ccc; }
+        button { background: #42b883; color: white; padding: 0.5rem 1rem; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div id="app">
+
+        <header>
+            <h1>{{ judulSitus }}</h1>
+            <p>Belajar HTML Fundamental dengan Vue.js</p>
+        </header>
+
+        <nav role="navigation">
+            <a href="#profil" @click="bagianAktif = 'profil'">Profil</a>
+            <a href="#kontak" @click="bagianAktif = 'kontak'">Kontak</a>
+            <a href="#tentang" @click="bagianAktif = 'tentang'">Tentang</a>
+        </nav>
+
+        <main>
+
+            <section id="profil" v-show="bagianAktif === 'profil'">
+                <h2>Profil Pengguna</h2>
+                
+                <form @submit.prevent="simpanProfil">
+                    <div class="form-group">
+                        <label for="nama">Nama Lengkap:</label>
+                        <input 
+                            type="text" 
+                            id="nama" 
+                            v-model="profil.nama"
+                            placeholder="Masukkan nama lengkap Anda"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            v-model="profil.email"
+                            placeholder="contoh@email.com"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="umur">Umur:</label>
+                        <input 
+                            type="number" 
+                            id="umur" 
+                            v-model="profil.umur"
+                            min="1" 
+                            max="100"
+                            placeholder="Masukkan umur"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="kota">Kota:</label>
+                        <select id="kota" v-model="profil.kota">
+                            <option value="">Pilih Kota</option>
+                            <option value="jakarta">Jakarta</option>
+                            <option value="bandung">Bandung</option>
+                            <option value="surabaya">Surabaya</option>
+                            <option value="yogyakarta">Yogyakarta</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bio">Bio Singkat:</label>
+                        <textarea 
+                            id="bio" 
+                            v-model="profil.bio"
+                            rows="4"
+                            placeholder="Ceritakan sedikit tentang diri Anda..."
+                        ></textarea>
+                    </div>
+
+                    <button type="submit">Simpan Profil</button>
+                </form>
+
+                <div v-if="profil.nama" class="hasil" data-section="profil-hasil">
+                    <h3>Data Profil:</h3>
+                    <p><strong>Nama:</strong> {{ profil.nama }}</p>
+                    <p><strong>Email:</strong> {{ profil.email }}</p>
+                    <p><strong>Umur:</strong> {{ profil.umur }} tahun</p>
+                    <p><strong>Kota:</strong> {{ profil.kota }}</p>
+                    <p><strong>Bio:</strong> {{ profil.bio }}</p>
+                </div>
+            </section>
+
+            <section id="kontak" v-show="bagianAktif === 'kontak'">
+                <h2>Hubungi Kami</h2>
+                
+                <form @submit.prevent="kirimPesan">
+                    <div class="form-group">
+                        <label for="subjek">Subjek:</label>
+                        <input 
+                            type="text" 
+                            id="subjek" 
+                            v-model="kontak.subjek"
+                            placeholder="Subjek pesan"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pesan">Pesan:</label>
+                        <textarea 
+                            id="pesan" 
+                            v-model="kontak.pesan"
+                            rows="5"
+                            placeholder="Tulis pesan Anda di sini..."
+                            required
+                        ></textarea>
+                    </div>
+
+                    <button type="submit">Kirim Pesan</button>
+                </form>
+
+                <div v-if="pesanTerkirim" class="sukses" data-status="berhasil">
+                    <p>✅ Pesan berhasil dikirim!</p>
+                </div>
+            </section>
+
+            <section id="tentang" v-show="bagianAktif === 'tentang'">
+                <h2>Tentang Proyek Ini</h2>
+                <p>Proyek ini dibuat untuk mempelajari:</p>
+                <ul>
+                    <li>Struktur HTML semantic (header, nav, main, section, footer)</li>
+                    <li>Attribute penting (id, class, data-*)</li>
+                    <li>Form element (input, select, textarea, button)</li>
+                    <li>Accessibility dasar (label, placeholder)</li>
+                    <li>Template Vue.js</li>
+                </ul>
+                
+                <div class="info" data-info="html-elements">
+                    <h3>Element HTML yang Digunakan:</h3>
+                    <p><code>&lt;header&gt;</code> - Bagian kepala halaman</p>
+                    <p><code>&lt;nav&gt;</code> - Navigasi situs</p>
+                    <p><code>&lt;main&gt;</code> - Konten utama</p>
+                    <p><code>&lt;section&gt;</code> - Bagian konten</p>
+                    <p><code>&lt;footer&gt;</code> - Bagian bawah halaman</p>
+                </div>
+            </section>
+
+            <div id="app">
+                <p>Jumlah : {{ count }} </p>
+                <button @click="count--">Tambah</button>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 Belajar HTML dengan Vue.js | Dibuat untuk pembelajaran</p>
+        </footer>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    judulSitus: 'Portal Belajar HTML',
+                    bagianAktif: 'profil',
+                    profil: {
+                        nama: '',
+                        email: '',
+                        umur: '',
+                        kota: '',
+                        bio: ''
+                    },
+                    kontak: {
+                        subjek: '',
+                        pesan: ''
+                    },
+                    pesanTerkirim: false,
+                    count: 0
+                }
+            },
+
+            methods: {
+                simpanProfil() {
+                    alert('Profil berhasil disimpan!');
+
+                },
+
+                kirimPesan() {
+                    this.pesanTerkirim = true;
+                    this.kontak.subjek = '';
+                    this.kontak.pesan = '';
+                    
+                    setTimeout(() => {
+                        this.pesanTerkirim = false;
+                    }, 3000);
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

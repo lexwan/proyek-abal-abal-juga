@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semua Directive Vue.js (v-)</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { max-width: 900px; margin: 0 auto; }
+        .section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; }
+        .highlight { background: yellow; }
+        .error { color: red; }
+        .success { color: green; }
+        .hidden { display: none; }
+        .fade-enter-active, .fade-leave-active { transition: opacity 0.5s; }
+        .fade-enter-from, .fade-leave-to { opacity: 0; }
+        button { margin: 5px; padding: 8px 15px; }
+        input, select, textarea { margin: 5px; padding: 5px; }
+    </style>
+</head>
+<body>
+    <div id="app" class="container">
+        <h1>{{ judul }}</h1>
+
+        <!-- 1. v-text -->
+        <div class="section">
+            <h2>1. v-text - Menampilkan teks</h2>
+            <p v-text="pesanText"></p>
+            <p>Bandingkan dengan: {{ pesanText }}</p>
+        </div>
+
+        <!-- 2. v-html -->
+        <div class="section">
+            <h2>2. v-html - Menampilkan HTML</h2>
+            <div v-html="pesanHTML"></div>
+        </div>
+
+        <!-- 3. v-show -->
+        <div class="section">
+            <h2>3. v-show - Menampilkan/menyembunyikan element</h2>
+            <button @click="tampilkanPesan = !tampilkanPesan">Toggle Pesan</button>
+            <p v-show="tampilkanPesan">Pesan ini bisa ditampilkan/disembunyikan!</p>
+        </div>
+
+        <!-- 4. v-if, v-else-if, v-else -->
+        <div class="section">
+            <h2>4. v-if, v-else-if, v-else - Conditional rendering</h2>
+            <select v-model="kondisi">
+                <option value="baik">Baik</option>
+                <option value="sedang">Sedang</option>
+                <option value="buruk">Buruk</option>
+            </select>
+            
+            <p v-if="kondisi === 'baik'" class="success">✅ Kondisi sangat baik!</p>
+            <p v-else-if="kondisi === 'sedang'">⚠️ Kondisi cukup baik</p>
+            <p v-else class="error">❌ Kondisi buruk</p>
+        </div>
+
+        <!-- 5. v-for -->
+        <div class="section">
+            <h2>5. v-for - Looping/perulangan</h2>
+            
+            <h3>Array sederhana:</h3>
+            <ul>
+                <li v-for="buah in daftarBuah" :key="buah">{{ buah }}</li>
+            </ul>
+            
+            <h3>Array object:</h3>
+            <table border="1">
+                <tr>
+                    <th>No</th>
+                    <th>Nama</th>
+                    <th>Umur</th>
+                    <th>Kota</th>
+                </tr>
+                <tr v-for="(user, index) in daftarUser" :key="user.id">
+                    <td>{{ index + 1 }}</td>
+                    <td>{{ user.nama }}</td>
+                    <td>{{ user.umur }}</td>
+                    <td>{{ user.kota }}</td>
+                </tr>
+            </table>
+            
+            <h3>Object properties:</h3>
+            <ul>
+                <li v-for="(value, key) in profilUser" :key="key">
+                    {{ key }}: {{ value }}
+                </li>
+            </ul>
+        </div>
+
+        <!-- 6. v-on (@) -->
+        <div class="section">
+            <h2>6. v-on (@) - Event handling</h2>
+            <button v-on:click="counter++">v-on:click ({{ counter }})</button>
+            <button @click="counter++">@click shorthand ({{ counter }})</button>
+            <button @dblclick="resetCounter">Double click untuk reset</button>
+            
+            <div>
+                <input @keyup.enter="tambahItem" v-model="itemBaru" placeholder="Tekan Enter untuk tambah">
+                <button @click="tambahItem">Tambah Item</button>
+            </div>
+            
+            <ul>
+                <li v-for="(item, index) in daftarItem" :key="index">
+                    {{ item }}
+                    <button @click="hapusItem(index)">Hapus</button>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 7. v-bind (:) -->
+        <div class="section">
+            <h2>7. v-bind (:) - Binding attributes</h2>
+            
+            <img v-bind:src="gambarSrc" v-bind:alt="gambarAlt" width="100">
+            <img :src="gambarSrc" :alt="gambarAlt" width="100">
+            
+            <div>
+                <input :disabled="inputDisabled" v-model="inputValue" placeholder="Input bisa dinonaktifkan">
+                <button @click="inputDisabled = !inputDisabled">
+                    {{ inputDisabled ? 'Aktifkan' : 'Nonaktifkan' }} Input
+                </button>
+            </div>
+            
+            <div :class="{ highlight: isHighlight, error: isError }">
+                Teks dengan class dinamis
+            </div>
+            <button @click="isHighlight = !isHighlight">Toggle Highlight</button>
+            <button @click="isError = !isError">Toggle Error</button>
+            
+            <div :style="{ color: warnaTeks, fontSize: ukuranFont + 'px' }">
+                Teks dengan style dinamis
+            </div>
+            <input type="color" v-model="warnaTeks">
+            <input type="range" min="10" max="30" v-model="ukuranFont">
+        </div>
+
+        <!-- 8. v-model -->
+        <div class="section">
+            <h2>8. v-model - Two-way data binding</h2>
+            
+            <div>
+                <label>Text Input:</label>
+                <input v-model="formData.nama" placeholder="Nama">
+                <p>Nilai: {{ formData.nama }}</p>
+            </div>
+            
+            <div>
+                <label>Textarea:</label>
+                <textarea v-model="formData.pesan" placeholder="Pesan"></textarea>
+                <p>Nilai: {{ formData.pesan }}</p>
+            </div>
+            
+            <div>
+                <label>Checkbox:</label>
+                <input type="checkbox" v-model="formData.setuju">
+                <span>Saya setuju</span>
+                <p>Status: {{ formData.setuju }}</p>
+            </div>
+            
+            <div>
+                <label>Radio:</label>
+                <input type="radio" v-model="formData.gender" value="pria"> Pria
+                <input type="radio" v-model="formData.gender" value="wanita"> Wanita
+                <p>Pilihan: {{ formData.gender }}</p>
+            </div>
+            
+            <div>
+                <label>Select:</label>
+                <select v-model="formData.kota">
+                    <option value="">Pilih Kota</option>
+                    <option value="jakarta">Jakarta</option>
+                    <option value="bandung">Bandung</option>
+                    <option value="surabaya">Surabaya</option>
+                </select>
+                <p>Pilihan: {{ formData.kota }}</p>
+            </div>
+            
+            <div>
+                <label>Multiple Select:</label>
+                <select v-model="formData.hobi" multiple>
+                    <option value="membaca">Membaca</option>
+                    <option value="olahraga">Olahraga</option>
+                    <option value="musik">Musik</option>
+                    <option value="traveling">Traveling</option>
+                </select>
+                <p>Pilihan: {{ formData.hobi }}</p>
+            </div>
+        </div>
+
+        <!-- 9. v-slot -->
+        <div class="section">
+            <h2>9. v-slot - Slot untuk komponen</h2>
+            <kartu-komponen>
+                <template v-slot:header>
+                    <h3>Header Slot</h3>
+                </template>
+                <template v-slot:default>
+                    <p>Ini adalah konten default slot</p>
+                </template>
+                <template v-slot:footer>
+                    <small>Footer Slot</small>
+                </template>
+            </kartu-komponen>
+        </div>
+
+        <!-- 10. v-pre -->
+        <div class="section">
+            <h2>10. v-pre - Skip kompilasi</h2>
+            <div v-pre>{{ pesanText }} - Ini tidak akan dikompilasi Vue</div>
+            <div>{{ pesanText }} - Ini akan dikompilasi Vue</div>
+        </div>
+
+        <!-- 11. v-cloak -->
+        <div class="section">
+            <h2>11. v-cloak - Menyembunyikan template sebelum kompilasi</h2>
+            <div v-cloak>{{ pesanText }}</div>
+        </div>
+
+        <!-- 12. v-once -->
+        <div class="section">
+            <h2>12. v-once - Render sekali saja</h2>
+            <div v-once>{{ pesanOnce }} (render sekali: {{ counter }})</div>
+            <div>{{ pesanOnce }} (selalu update: {{ counter }})</div>
+        </div>
+
+        <!-- 13. v-memo (Vue 3.2+) -->
+        <div class="section">
+            <h2>13. v-memo - Memoization</h2>
+            <div v-memo="[counter]">
+                <p>Memo dengan counter: {{ counter }}</p>
+                <p>Random: {{ Math.random() }}</p>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="section">
+            <h2>📊 Summary Data</h2>
+            <pre>{{ JSON.stringify({
+                counter,
+                kondisi,
+                formData,
+                daftarItem
+            }, null, 2) }}</pre>
+        </div>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+
+        // Komponen untuk v-slot
+        const KartuKomponen = {
+            template: `
+                <div style="border: 1px solid #ccc; padding: 15px; margin: 10px 0;">
+                    <header style="border-bottom: 1px solid #eee; padding-bottom: 10px;">
+                        <slot name="header"></slot>
+                    </header>
+                    <main style="padding: 10px 0;">
+                        <slot></slot>
+                    </main>
+                    <footer style="border-top: 1px solid #eee; padding-top: 10px;">
+                        <slot name="footer"></slot>
+                    </footer>
+                </div>
+            `
+        };
+
+        createApp({
+            components: {
+                'kartu-komponen': KartuKomponen
+            },
+            data() {
+                return {
+                    judul: 'Semua Directive Vue.js (v-)',
+                    pesanText: 'Ini adalah pesan teks',
+                    pesanHTML: '<strong>Ini adalah <em>HTML</em> yang di-render</strong>',
+                    pesanOnce: 'Pesan ini di-render sekali',
+                    tampilkanPesan: true,
+                    kondisi: 'baik',
+                    counter: 0,
+                    
+                    // Data untuk v-for
+                    daftarBuah: ['Apel', 'Jeruk', 'Mangga', 'Pisang'],
+                    daftarUser: [
+                        { id: 1, nama: 'Ahmad', umur: 25, kota: 'Jakarta' },
+                        { id: 2, nama: 'Siti', umur: 30, kota: 'Bandung' },
+                        { id: 3, nama: 'Budi', umur: 28, kota: 'Surabaya' }
+                    ],
+                    profilUser: {
+                        nama: 'John Doe',
+                        email: 'john@email.com',
+                        umur: 30,
+                        pekerjaan: 'Developer'
+                    },
+                    
+                    // Data untuk v-on
+                    itemBaru: '',
+                    daftarItem: ['Item 1', 'Item 2'],
+                    
+                    // Data untuk v-bind
+                    gambarSrc: 'https://via.placeholder.com/100',
+                    gambarAlt: 'Placeholder Image',
+                    inputDisabled: false,
+                    inputValue: '',
+                    isHighlight: false,
+                    isError: false,
+                    warnaTeks: '#000000',
+                    ukuranFont: 16,
+                    
+                    // Data untuk v-model
+                    formData: {
+                        nama: '',
+                        pesan: '',
+                        setuju: false,
+                        gender: '',
+                        kota: '',
+                        hobi: []
+                    }
+                }
+            },
+            methods: {
+                resetCounter() {
+                    this.counter = 0;
+                },
+                tambahItem() {
+                    if (this.itemBaru.trim()) {
+                        this.daftarItem.push(this.itemBaru);
+                        this.itemBaru = '';
+                    }
+                },
+                hapusItem(index) {
+                    this.daftarItem.splice(index, 1);
+                }
+            }
+        }).mount('#app');
+    </script>
+
+    <style>
+        [v-cloak] { display: none; }
+    </style>
+</body>
+</html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contoh Penggunaan ID yang Berbeda</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        
+        /* Styling berdasarkan ID */
+        #header-utama { background: #3498db; color: white; padding: 20px; text-align: center; }
+        #sidebar-kiri { width: 200px; float: left; background: #ecf0f1; padding: 15px; }
+        #konten-utama { margin-left: 220px; padding: 15px; }
+        #footer-bawah { clear: both; background: #2c3e50; color: white; padding: 10px; text-align: center; }
+        
+        /* ID untuk form elements */
+        #form-login { border: 2px solid #e74c3c; padding: 20px; margin: 20px 0; }
+        #tombol-submit { background: #27ae60; color: white; padding: 10px 20px; border: none; }
+        #pesan-error { color: #e74c3c; background: #fadbd8; padding: 10px; display: none; }
+        #pesan-sukses { color: #27ae60; background: #d5f4e6; padding: 10px; display: none; }
+        
+        /* ID untuk navigasi */
+        #menu-navigasi { background: #34495e; padding: 10px; }
+        #menu-navigasi a { color: white; text-decoration: none; margin-right: 15px; }
+        
+        /* ID untuk modal dan popup */
+        #modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; }
+        #popup-konfirmasi { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; }
+        
+        .section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <!-- ID untuk struktur layout -->
+        <header id="header-utama">
+            <h1>Contoh Penggunaan ID yang Berbeda</h1>
+        </header>
+
+        <!-- ID untuk navigasi -->
+        <nav id="menu-navigasi">
+            <a href="#section-form">Form</a>
+            <a href="#section-tabel">Tabel</a>
+            <a href="#section-media">Media</a>
+            <a href="#section-interaktif">Interaktif</a>
+        </nav>
+
+        <!-- ID untuk sidebar -->
+        <aside id="sidebar-kiri">
+            <h3>Menu Samping</h3>
+            <ul>
+                <li><a href="#profil-pengguna">Profil</a></li>
+                <li><a href="#pengaturan-akun">Pengaturan</a></li>
+                <li><a href="#riwayat-aktivitas">Riwayat</a></li>
+            </ul>
+        </aside>
+
+        <!-- ID untuk konten utama -->
+        <main id="konten-utama">
+            
+            <!-- Section 1: Form dengan berbagai ID -->
+            <section id="section-form" class="section">
+                <h2>1. ID untuk Form Elements</h2>
+                
+                <form id="form-login">
+                    <div>
+                        <label for="input-username">Username:</label>
+                        <input type="text" id="input-username" placeholder="Masukkan username">
+                    </div>
+                    
+                    <div>
+                        <label for="input-password">Password:</label>
+                        <input type="password" id="input-password" placeholder="Masukkan password">
+                    </div>
+                    
+                    <div>
+                        <label for="select-role">Role:</label>
+                        <select id="select-role">
+                            <option value="admin">Admin</option>
+                            <option value="user">User</option>
+                            <option value="guest">Guest</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" id="tombol-submit">Login</button>
+                </form>
+                
+                <!-- ID untuk pesan feedback -->
+                <div id="pesan-error">❌ Login gagal! Periksa username dan password.</div>
+                <div id="pesan-sukses">✅ Login berhasil! Selamat datang.</div>
+            </section>
+
+            <!-- Section 2: Tabel dengan ID -->
+            <section id="section-tabel" class="section">
+                <h2>2. ID untuk Tabel dan Data</h2>
+                
+                <table id="tabel-pengguna" border="1" style="width: 100%;">
+                    <thead id="header-tabel">
+                        <tr>
+                            <th>ID</th>
+                            <th>Nama</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="body-tabel">
+                        <tr id="user-001">
+                            <td>001</td>
+                            <td>Ahmad</td>
+                            <td>ahmad@email.com</td>
+                            <td>Aktif</td>
+                        </tr>
+                        <tr id="user-002">
+                            <td>002</td>
+                            <td>Siti</td>
+                            <td>siti@email.com</td>
+                            <td>Nonaktif</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Section 3: Media dengan ID -->
+            <section id="section-media" class="section">
+                <h2>3. ID untuk Media Elements</h2>
+                
+                <div>
+                    <img id="gambar-profil" src="https://via.placeholder.com/150" alt="Foto Profil" style="border-radius: 50%;">
+                </div>
+                
+                <div>
+                    <video id="video-tutorial" width="300" controls>
+                        <source src="#" type="video/mp4">
+                        Browser Anda tidak mendukung video.
+                    </video>
+                </div>
+                
+                <div>
+                    <audio id="audio-notifikasi" controls>
+                        <source src="#" type="audio/mp3">
+                        Browser Anda tidak mendukung audio.
+                    </audio>
+                </div>
+            </section>
+
+            <!-- Section 4: Element Interaktif -->
+            <section id="section-interaktif" class="section">
+                <h2>4. ID untuk Element Interaktif</h2>
+                
+                <button id="tombol-buka-modal" onclick="bukaModal()">Buka Modal</button>
+                <button id="tombol-toggle-tema" onclick="toggleTema()">Ganti Tema</button>
+                <button id="tombol-reset-form" onclick="resetForm()">Reset Form</button>
+                
+                <div id="counter-display" style="margin: 10px 0;">
+                    <span>Counter: </span>
+                    <span id="angka-counter">0</span>
+                    <button id="tombol-tambah" onclick="tambahCounter()">+</button>
+                    <button id="tombol-kurang" onclick="kurangCounter()">-</button>
+                </div>
+                
+                <div id="progress-container" style="margin: 10px 0;">
+                    <label for="progress-bar">Progress:</label>
+                    <progress id="progress-bar" value="0" max="100">0%</progress>
+                    <button id="tombol-mulai-progress" onclick="mulaiProgress()">Mulai Progress</button>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- ID untuk footer -->
+        <footer id="footer-bawah">
+            <p>&copy; 2024 Contoh Penggunaan ID - Dibuat untuk pembelajaran</p>
+        </footer>
+
+        <!-- Modal dengan ID -->
+        <div id="modal-overlay" onclick="tutupModal()">
+            <div id="popup-konfirmasi" onclick="event.stopPropagation()">
+                <h3 id="judul-modal">Konfirmasi</h3>
+                <p id="isi-modal">Apakah Anda yakin ingin melanjutkan?</p>
+                <button id="tombol-ya" onclick="konfirmasiYa()">Ya</button>
+                <button id="tombol-tidak" onclick="tutupModal()">Tidak</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let counter = 0;
+        let progressValue = 0;
+
+        // Fungsi untuk modal
+        function bukaModal() {
+            document.getElementById('modal-overlay').style.display = 'block';
+        }
+
+        function tutupModal() {
+            document.getElementById('modal-overlay').style.display = 'none';
+        }
+
+        function konfirmasiYa() {
+            alert('Anda memilih Ya!');
+            tutupModal();
+        }
+
+        // Fungsi untuk counter
+        function tambahCounter() {
+            counter++;
+            document.getElementById('angka-counter').textContent = counter;
+        }
+
+        function kurangCounter() {
+            counter--;
+            document.getElementById('angka-counter').textContent = counter;
+        }
+
+        // Fungsi untuk progress bar
+        function mulaiProgress() {
+            progressValue = 0;
+            const progressBar = document.getElementById('progress-bar');
+            const interval = setInterval(() => {
+                progressValue += 10;
+                progressBar.value = progressValue;
+                if (progressValue >= 100) {
+                    clearInterval(interval);
+                    alert('Progress selesai!');
+                }
+            }, 200);
+        }
+
+        // Fungsi untuk toggle tema
+        function toggleTema() {
+            const body = document.body;
+            if (body.style.backgroundColor === 'black') {
+                body.style.backgroundColor = 'white';
+                body.style.color = 'black';
+            } else {
+                body.style.backgroundColor = 'black';
+                body.style.color = 'white';
+            }
+        }
+
+        // Fungsi untuk reset form
+        function resetForm() {
+            document.getElementById('form-login').reset();
+            document.getElementById('pesan-error').style.display = 'none';
+            document.getElementById('pesan-sukses').style.display = 'none';
+        }
+
+        // Event listener untuk form login
+        document.getElementById('form-login').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('input-username').value;
+            const password = document.getElementById('input-password').value;
+            
+            if (username === 'admin' && password === '123') {
+                document.getElementById('pesan-sukses').style.display = 'block';
+                document.getElementById('pesan-error').style.display = 'none';
+            } else {
+                document.getElementById('pesan-error').style.display = 'block';
+                document.getElementById('pesan-sukses').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
